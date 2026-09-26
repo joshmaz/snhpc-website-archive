@@ -1,0 +1,8 @@
+{
+  "name": "snhpc-website-archive",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "python3 scripts/check-links.py && node --test scripts/routing.test.cjs"
+  }
+}

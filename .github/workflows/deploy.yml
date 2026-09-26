@@ -1,0 +1,29 @@
+name: Deploy archive to AWS
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: archive-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      S3_BUCKET: ${{ vars.S3_BUCKET }}
+      DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/build.mjs && python3 scripts/check-links.py && node --test scripts/routing.test.cjs
+      - name: Require archive configuration
+        run: test -n "$S3_BUCKET" && test -n "$DISTRIBUTION_ID" && test "${{ github.ref }}" = refs/heads/main
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - run: aws s3 sync dist/ "s3://$S3_BUCKET/" --delete --cache-control 'public,max-age=300'
+      - run: aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths '/*'

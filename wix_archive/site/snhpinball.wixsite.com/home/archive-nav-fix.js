@@ -2,7 +2,7 @@
  * Static archive: ensure Wix nav links target index.html files on S3/CloudFront.
  */
 (function () {
-  var PREFIX = '/wix_archive/site/snhpinball.wixsite.com/home/index.html';
+  var PREFIX = '/wix_archive/site/snhpinball.wixsite.com/home';
   var SLUGS = ['about-us', 'events', 'grid', 'menu', 'merch', 'our-games'];
 
   function fixRelativeHref(href) {

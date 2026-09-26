@@ -43,12 +43,7 @@
   ];
 
   function wixImageUrl(mediaId) {
-    var base = 'https://static.wixstatic.com/media/' + mediaId;
-    return (
-      base +
-      '/v1/fill/w_640,h_480,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/' +
-      mediaId
-    );
+    return '/wix_archive/assets/slideshow/' + mediaId;
   }
 
   function run() {
