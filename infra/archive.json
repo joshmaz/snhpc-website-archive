@@ -12,9 +12,10 @@
       "Default": "",
       "Description": "Optional snhpinballclub.com Route53 hosted zone ID"
     },
-    "GitHubOwner": {
+    "GitHubSubject": {
       "Type": "String",
-      "Default": "joshmaz"
+      "Default": "repo:joshmaz@80361142/snhpc-website-archive@1389793903:ref:refs/heads/main",
+      "Description": "Exact GitHub OIDC subject for this repository main branch"
     }
   },
   "Conditions": {
@@ -314,7 +315,7 @@
                 "StringEquals": {
                   "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
                   "token.actions.githubusercontent.com:sub": {
-                    "Fn::Sub": "repo:${GitHubOwner}/snhpc-website-archive:ref:refs/heads/main"
+                    "Ref": "GitHubSubject"
                   }
                 }
               }
