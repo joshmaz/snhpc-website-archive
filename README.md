@@ -17,9 +17,9 @@ Open `/` for the museum entrance. Historical `/wix_archive/…` paths remain int
 
 ## Inventory and limitations
 
-The original snapshot contains 12 HTML files: the museum entrance, archived home, About Us, Events, Gallery (`grid`), Merch, and three saved variants each of Menu and Our Games. It also includes mirrored Wix JavaScript, styles, image variants, and fonts. Eight slideshow images are now stored locally. The runtime navigation helper's incorrect home prefix has been corrected.
+The original snapshot contains 12 HTML files: the museum entrance, archived home, About Us, Events, Gallery (`grid`), Merch, and three saved variants each of Menu and Our Games. It also includes mirrored Wix JavaScript, styles, image variants, and fonts. Eight slideshow images and three PayPal image assets are now stored locally. The runtime navigation helper's incorrect home prefix has been corrected.
 
-Local HTML/CSS references are validated at build time. The mirror still contains Wix runtime configuration and external services: Wix/Parastorage, Sentry, PayPal button imagery, Facebook, YouTube, Pintastic and Internet Archive links. This is a historical static snapshot; original payment, menu filtering, video, and other interactive integrations are not guaranteed to work offline or after their providers change. Do not use archived payment/membership information as current club instructions.
+Local HTML/CSS references are validated at build time. The original mirror retains Wix runtime configuration. The build removes Wix executable scripts from published HTML because they overwrite saved images and request uncaptured workers; it keeps the archive navigation and slideshow scripts. Remaining external references include: Wix/Parastorage resource hints, Facebook, YouTube, Pintastic and Internet Archive links. This is a historical static snapshot; original payment, menu filtering, video, and other interactive integrations are not guaranteed to work offline or after their providers change. Do not use archived payment/membership information as current club instructions.
 
 See [deployment instructions](DEPLOYMENT.md) and [verification results](VERIFICATION.md).
 
