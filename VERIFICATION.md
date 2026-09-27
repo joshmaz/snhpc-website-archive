@@ -19,7 +19,7 @@ Verified locally September 26–27, 2026, from source main `91f6995aedc33ec19ad0
 - CloudFormation service validation and actual stack creation.
 - S3 upload, CloudFront deployment and cache invalidation.
 - Live archive HTTP redirects, real edge 404 responses, image content types and HTTPS certificate checks.
-- DNS/subdomain activation. Public DNS returned NXDOMAIN for `archive.snhpinball.club`; local resolution of the main hostname also failed. This does not establish the cause or domain registration status.
+- DNS/subdomain activation. The initially requested `archive.snhpinball.club` returned NXDOMAIN. Joshua corrected the target to `archive.snhpinballclub.com` on September 27. This does not establish the cause or domain registration status.
 - Live current-site verification; its build is verified, but its public URL was not reachable through local DNS during this task.
 
 No AWS profiles or credentials were available. No AWS or DNS changes were made. No archive content was removed from the source repository. Follow `DEPLOYMENT.md` and record live acceptance before any removal.

@@ -13,7 +13,7 @@ node --test scripts/routing.test.cjs
 python3 -m http.server 8000 --directory dist
 ```
 
-Open `/` for the museum entrance. Historical `/wix_archive/…` paths remain intact. The current-club link points to `https://snhpinball.club/`. Only `dist/` is deployed.
+Open `/` for the museum entrance. Historical `/wix_archive/…` paths remain intact. The current-club link points to `https://snhpinballclub.com/`. Only `dist/` is deployed.
 
 ## Inventory and limitations
 
@@ -23,4 +23,4 @@ Local HTML/CSS references are validated at build time. The original mirror retai
 
 See [deployment instructions](DEPLOYMENT.md) and [verification results](VERIFICATION.md).
 
-**Do not remove `wix_archive/` from the source repository until the new deployment and `archive.snhpinball.club` pass live acceptance checks.**
+**Do not remove `wix_archive/` from the source repository until the new deployment and `archive.snhpinballclub.com` pass live acceptance checks.**

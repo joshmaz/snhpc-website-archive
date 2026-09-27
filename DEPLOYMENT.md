@@ -2,7 +2,7 @@
 
 ## Access needed
 
-Joshua must provide an authenticated AWS session in the intended account (prefer AWS SSO/profile login; do not paste secret keys into chat), plus access to DNS for `snhpinball.club`. This environment currently has no AWS credentials or profiles. GitHub source-repository secrets exist but cannot be read or safely reused for a separate bucket.
+Joshua must provide an authenticated AWS session in the intended account (prefer AWS SSO/profile login; do not paste secret keys into chat), plus access to DNS for `snhpinballclub.com`. This environment currently has no AWS credentials or profiles. GitHub source-repository secrets exist but cannot be read or safely reused for a separate bucket.
 
 The CloudFormation template provisions a new private, encrypted, versioned S3 bucket, a separate CloudFront distribution with origin access control, a routing function, noindex response headers, and an IAM role scoped only to this archive. It does not modify the production bucket or distribution. The bucket is retained on stack deletion. AWS hosting charges apply.
 
@@ -30,10 +30,10 @@ Set these GitHub Actions **repository variables** on `joshmaz/snhpc-website-arch
 
 Run the **Deploy archive to AWS** workflow on main. It builds, validates, syncs only `dist/`, and invalidates only the archive distribution. Deployment is manual to avoid unintended publishing during setup. The role trusts only this repository's main branch. Do not put the current website's bucket or role in these variables.
 
-## 2. Add archive.snhpinball.club
+## 2. Add archive.snhpinballclub.com
 
-1. Confirm the domain registration and authoritative DNS provider. At preparation time the public DNS query for `archive.snhpinball.club` returned NXDOMAIN; local resolution of `snhpinball.club` also failed. Investigate the parent domain before creating records.
-2. Request an ACM public certificate for `archive.snhpinball.club` in **us-east-1** and add its DNS validation CNAME at the authoritative DNS provider. Wait for `ISSUED`.
+1. Confirm the domain registration and authoritative DNS provider. At preparation time the public DNS query for `archive.snhpinballclub.com` returned NXDOMAIN; local resolution of `snhpinballclub.com` also failed. Investigate the parent domain before creating records.
+2. Request an ACM public certificate for `archive.snhpinballclub.com` in **us-east-1** and add its DNS validation CNAME at the authoritative DNS provider. Wait for `ISSUED`.
 3. Update the stack with `CertificateArn`. If DNS is in Route53, also supply its actual `HostedZoneId`; the stack then creates A and AAAA alias records for the archive only.
 
 ```sh
@@ -48,7 +48,7 @@ AWS references: [S3 origin access control](https://docs.aws.amazon.com/AmazonClo
 
 ## 3. Live acceptance before any removal
 
-- Load `https://archive.snhpinball.club/` and follow Enter the archived site.
+- Load `https://archive.snhpinballclub.com/` and follow Enter the archived site.
 - Check home/slideshow, About Us, Events, Gallery, Menu, Our Games and Merch; inspect images and navigation on desktop and mobile.
 - Confirm `/wix_archive` redirects to `/wix_archive/`, and archived directory/extensionless page URLs resolve.
 - Confirm a made-up page returns **HTTP 404** with the archive error page; an existing image returns the correct image content type.

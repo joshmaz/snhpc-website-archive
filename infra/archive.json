@@ -5,12 +5,12 @@
     "CertificateArn": {
       "Type": "String",
       "Default": "",
-      "Description": "Validated ACM certificate in us-east-1 for archive.snhpinball.club; blank uses CloudFront hostname"
+      "Description": "Validated ACM certificate in us-east-1 for archive.snhpinballclub.com; blank uses CloudFront hostname"
     },
     "HostedZoneId": {
       "Type": "String",
       "Default": "",
-      "Description": "Optional snhpinball.club Route53 hosted zone ID"
+      "Description": "Optional snhpinballclub.com Route53 hosted zone ID"
     },
     "GitHubOwner": {
       "Type": "String",
@@ -142,7 +142,7 @@
             "Fn::If": [
               "CustomDomain",
               [
-                "archive.snhpinball.club"
+                "archive.snhpinballclub.com"
               ],
               {
                 "Ref": "AWS::NoValue"
@@ -263,7 +263,7 @@
         "HostedZoneId": {
           "Ref": "HostedZoneId"
         },
-        "Name": "archive.snhpinball.club",
+        "Name": "archive.snhpinballclub.com",
         "Type": "A",
         "AliasTarget": {
           "DNSName": {
@@ -283,7 +283,7 @@
         "HostedZoneId": {
           "Ref": "HostedZoneId"
         },
-        "Name": "archive.snhpinball.club",
+        "Name": "archive.snhpinballclub.com",
         "Type": "AAAA",
         "AliasTarget": {
           "DNSName": {
