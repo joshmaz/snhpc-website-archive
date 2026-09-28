@@ -1,5 +1,5 @@
 """Live acceptance checks. Run after deployment: python3 scripts/check-live.py"""
-import urllib.request, urllib.error
+import urllib.request, urllib.error, subprocess
 base='https://archive.snhpinballclub.com'
 class NoRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,req,fp,code,msg,headers,newurl): return None
@@ -35,7 +35,9 @@ for url,target in [(base+'/wix_archive','/wix_archive/'),('http://archive.snhpin
   assert r.headers['Location']==target,(url,r.headers['Location'])
   print(r.status,url,'->',target)
 for url in ['https://snhpinballclub.com/','https://snhpinballclub.com/wix_archive/index.html']:
- with fetch(url) as r:
-  assert r.status==200,(url,r.status)
-  print(r.status,url)
+ # The production Cloudflare rules reject Python urllib's default client.
+ # Use curl for this separate availability check; retain certificate validation.
+ status=subprocess.check_output(['curl','--silent','--show-error','--max-time','30','--output','/dev/null','--write-out','%{http_code}',url],text=True)
+ assert status=='200',(url,status)
+ print(status,url)
 print('Live acceptance passed; HTTPS certificate validation was enabled.')

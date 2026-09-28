@@ -1,5 +1,7 @@
 # Southern New Hampshire Pinball Club website archive
 
+**Live archive:** https://archive.snhpinballclub.com/
+
 Independent museum copy of the former Wix site, copied from `joshmaz/pinball-club-website` at `91f6995aedc33ec19ad04071f4175b439fe19f06`. The original 189 files are preserved in the first commit and hashed in `SOURCE-MANIFEST.json`. Nothing was removed from the current website.
 
 ## Build and verify

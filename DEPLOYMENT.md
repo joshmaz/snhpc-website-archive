@@ -1,8 +1,14 @@
 # AWS deployment
 
-## Access needed
+## Current deployment
 
-Joshua must provide an authenticated AWS session in the intended account (prefer AWS SSO/profile login; do not paste secret keys into chat), plus access to DNS for `snhpinballclub.com`. This environment currently has no AWS credentials or profiles. GitHub source-repository secrets exist but cannot be read or safely reused for a separate bucket.
+Live: https://archive.snhpinballclub.com/ — verified September 27, 2026.
+
+Stack: `snhpc-website-archive` in `us-east-1`; distribution: `E2B9WQHNSCJAZD`; bucket: `snhpc-website-archive-bucket-uvqanalzyf9y`. GitHub repository variables are configured and the manual deployment workflow has succeeded. See `VERIFICATION.md` for acceptance results.
+
+For future content releases, run **Deploy archive to AWS** on main, then `python3 scripts/check-live.py`. Infrastructure updates must preserve the certificate parameter shown below. The commands in the remaining sections document initial provisioning for recovery/reference.
+
+AWS CLI authentication and Cloudflare dashboard access were used for setup. GitHub deploys use the scoped OIDC role, so no long-lived AWS keys are stored in GitHub. GitHub now emits an immutable repository subject; `GitHubSubject` in the template must match the repository's exact main-branch identity.
 
 The CloudFormation template provisions a new private, encrypted, versioned S3 bucket, a separate CloudFront distribution with origin access control, a routing function, noindex response headers, and an IAM role scoped only to this archive. It does not modify the production bucket or distribution. The bucket is retained on stack deletion. AWS hosting charges apply.
 
@@ -32,14 +38,14 @@ Run the **Deploy archive to AWS** workflow on main. It builds, validates, syncs 
 
 ## 2. Add archive.snhpinballclub.com
 
-1. Confirm the domain registration and authoritative DNS provider. At preparation time the public DNS query for `archive.snhpinballclub.com` returned NXDOMAIN; local resolution of `snhpinballclub.com` also failed. Investigate the parent domain before creating records.
+1. The confirmed domain is `snhpinballclub.com`, managed in Cloudflare. The initially requested `snhpinball.club` was a different hostname; Joshua corrected it before deployment.
 2. Request an ACM public certificate for `archive.snhpinballclub.com` in **us-east-1** and add its DNS validation CNAME at the authoritative DNS provider. Wait for `ISSUED`.
 3. Update the stack with `CertificateArn`. If DNS is in Route53, also supply its actual `HostedZoneId`; the stack then creates A and AAAA alias records for the archive only.
 
 ```sh
 aws cloudformation deploy --region us-east-1 --stack-name snhpc-website-archive \
   --template-file infra/archive.json --capabilities CAPABILITY_IAM \
-  --parameter-overrides CertificateArn=YOUR_VALIDATED_CERTIFICATE_ARN HostedZoneId=YOUR_ZONE_ID
+  --parameter-overrides CertificateArn=arn:aws:acm:us-east-1:049145893448:certificate/00b6875d-2962-4bcf-a073-3fbec3e5c5c7
 ```
 
 For external DNS, omit `HostedZoneId` and create a CNAME for `archive` pointing to the `CloudFrontDomain` output. Keep the ACM validation CNAME for renewal. Wait for CloudFront's status to become `Deployed` and DNS propagation.
