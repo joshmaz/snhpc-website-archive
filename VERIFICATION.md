@@ -29,10 +29,16 @@ Verified locally September 26–27, 2026, from source main `91f6995aedc33ec19ad0
 - Production homepage and original `/wix_archive/index.html` return 200 with curl. Python urllib received a production Cloudflare 403; the availability check therefore uses curl for production. Archive checks use urllib normally.
 - Source main remains `91f6995aedc33ec19ad04071f4175b439fe19f06`, matching the source that passed all 99 tests and the full build. No source-repository changes or production deployments were made.
 
-The archive deployment and subdomain are confirmed working. The duplicate content remains in the source repository; removal and old-domain redirects are a separate follow-up.
+The archive deployment and subdomain were confirmed working before the source cleanup described below.
 
 ## Photo restoration — September 28, 2026
 
 The first migration checks confirmed image availability but missed that Wix had supplied deliberately blurred 49–147px placeholders. Commit `5795f89` saves 69 clear photo renditions locally and replaces 264 placeholder references across six affected HTML pages, including the game lists and gallery. `IMAGE-RESTORATION.json` records the source URLs and sizes. Build validation now rejects blurred image sources.
 
 Deployment [36422461335](https://github.com/joshmaz/snhpc-website-archive/actions/runs/36422461335) succeeded. In the live Our Games page, all 62 restored image elements loaded; the first photo was verified at 800×800 and the result was visually inspected. All live acceptance checks passed again. Joshua accepted the archive's appearance before source cleanup was prepared.
+
+## Source cleanup completed — September 28, 2026
+
+After Joshua accepted the archive, [source PR #108](https://github.com/joshmaz/pinball-club-website/pull/108) merged as `c9cdd3f1896af867a6c76c64ecde5834a2c71a94`. The duplicate snapshot and obsolete mirror scripts were removed. Twelve small HTML redirect pages preserve old page URLs, and the About page links directly to the archive. JavaScript redirects preserve queries and fragments; meta refresh and a visible link provide fallbacks. These are browser redirects with HTTP 200 responses.
+
+The full source build passed all 100 tests, duplicate checks and snapshot validation. Netlify preview checks passed. [Production deployment 36423563633](https://github.com/joshmaz/pinball-club-website/actions/runs/36423563633) succeeded. All 12 production redirect pages and the updated About link were checked. A live browser followed the old Our Games URL to its matching archive page. Archive live acceptance passed again, including assets, HTTPS and true 404 behavior.
