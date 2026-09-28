@@ -30,3 +30,9 @@ Verified locally September 26–27, 2026, from source main `91f6995aedc33ec19ad0
 - Source main remains `91f6995aedc33ec19ad04071f4175b439fe19f06`, matching the source that passed all 99 tests and the full build. No source-repository changes or production deployments were made.
 
 The archive deployment and subdomain are confirmed working. The duplicate content remains in the source repository; removal and old-domain redirects are a separate follow-up.
+
+## Photo restoration — September 28, 2026
+
+The first migration checks confirmed image availability but missed that Wix had supplied deliberately blurred 49–147px placeholders. Commit `5795f89` saves 69 clear photo renditions locally and replaces 264 placeholder references across six affected HTML pages, including the game lists and gallery. `IMAGE-RESTORATION.json` records the source URLs and sizes. Build validation now rejects blurred image sources.
+
+Deployment [36422461335](https://github.com/joshmaz/snhpc-website-archive/actions/runs/36422461335) succeeded. In the live Our Games page, all 62 restored image elements loaded; the first photo was verified at 800×800 and the result was visually inspected. All live acceptance checks passed again. Joshua accepted the archive's appearance before source cleanup was prepared.
