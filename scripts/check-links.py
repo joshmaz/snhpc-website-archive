@@ -19,6 +19,8 @@ def check(value, source):
 class Parser(HTMLParser):
  def handle_starttag(self, tag, attrs):
   for key,value in attrs:
+   if tag == 'img' and key == 'src' and value and 'blur_' in value:
+    errors.add((str(source.relative_to(root)), 'Blurred placeholder: '+value))
    if key in ('href','src','poster'): check(value, source)
 for source in root.rglob('*'):
  if source.suffix=='.html': Parser().feed(source.read_text())
